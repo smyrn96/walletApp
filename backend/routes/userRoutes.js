@@ -6,10 +6,17 @@ const authController = require("../controllers/authController");
 const { getAllUsers, createUser, getUser, updateUser, deleteUser } =
   userController;
 
-const { signup } = authController;
+const { signup, login, protectEndpoints, restrictTo } = authController;
 
 //Visible routes to all
 router.route("/signup").post(signup);
+router.route("/login").post(login);
+
+//Restrict endpoints after this middleware to users with jwt token
+router.use(protectEndpoints);
+
+//Restrict endpoints to admin users
+router.use(restrictTo("admin"));
 
 //Get all users, Create user
 router.route("/").get(getAllUsers).post(createUser);
