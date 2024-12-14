@@ -3,6 +3,7 @@ const dotenv = require("dotenv");
 const app = express();
 const morgan = require("morgan");
 const userRouter = require("./routes/userRoutes");
+const transactionRouter = require("./routes/transactionRoutes");
 const { errorController } = require("./controllers/errorController");
 
 //Setting the env file
@@ -17,6 +18,7 @@ if (process.env.NODE_ENV === "development") {
 
 //Routing
 app.use("/api/v1/users/", userRouter);
+app.use("/api/v1/transactions/", transactionRouter);
 app.all("*", (req, res, next) => {
   next(new AppError(`There in no page with that URL(${req.originalUrl})`, 404));
 });

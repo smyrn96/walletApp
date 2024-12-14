@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const transactionRouter = require("./transactionRoutes");
 
 const userController = require("../controllers/userController");
 const authController = require("../controllers/authController");
@@ -7,6 +8,8 @@ const { getAllUsers, createUser, getUser, updateUser, deleteUser } =
   userController;
 
 const { signup, login, protectEndpoints, restrictTo } = authController;
+
+router.use("/:userId/transactions", transactionRouter);
 
 //Visible routes to all
 router.route("/signup").post(signup);
