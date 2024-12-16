@@ -9,6 +9,7 @@ const {
   createInvestment,
   deleteInvestment,
   updateInvestment,
+  getInvestmentStats,
 } = investmentController;
 
 const { protectEndpoints } = authController;
@@ -17,6 +18,10 @@ const { protectEndpoints } = authController;
 router.use(protectEndpoints);
 
 router.route("/").get(getAllInvestments).post(createInvestment);
+
+//Investment stats route
+router.route("/stats").get(getInvestmentStats);
+
 router
   .route("/:id")
   .get(getInvestment)

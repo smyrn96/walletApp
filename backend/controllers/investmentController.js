@@ -47,3 +47,50 @@ exports.createInvestment = catchAsync(async (req, res, next) => {
 
 exports.updateInvestment = factory.updateOne(Investment);
 exports.deleteInvestment = factory.deleteOne(Investment);
+
+exports.getInvestmentStats = catchAsync(async (req, res, next) => {
+  const { start_date, end_date } = req.query;
+
+  // Default time range: last 30 days
+  const matchStage = {
+    userId: req.user._id, // Filter transactions by the logged-in user
+  };
+
+  // If a date range is provided, add it to the filter
+  if (start_date || end_date) {
+    matchStage.createdAt = {};
+    if (start_date) matchStage.createdAt.$gte = new Date(start_date);
+    if (end_date) matchStage.createdAt.$lte = new Date(end_date);
+  }
+
+  const stats = await Investment.aggregate([
+    { $match: matchStage }, // Filter by user and date range
+    {
+      $group: {
+        _id: "$type",
+        totalAmount: { $sum: "$amount" },
+        minAmount: { $min: "$amount" },
+        maxAmount: { $max: "$amount" },
+        avgAmount: { $avg: "$amount" },
+        count: { $sum: 1 },
+      },
+    },
+    {
+      $project: {
+        type: "$_id",
+        _id: 0,
+        totalAmount: 1,
+        minAmount: 1,
+        maxAmount: 1,
+        avgAmount: 1,
+        count: 1,
+        categories: 1,
+      },
+    },
+  ]);
+
+  res.status(200).json({
+    status: "success",
+    data: stats,
+  });
+});

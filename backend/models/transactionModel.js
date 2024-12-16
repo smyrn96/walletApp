@@ -33,7 +33,12 @@ const transactionSchema = mongoose.Schema({
       "education",
       "others",
     ],
-    required: [true, "Category is required"],
+    required: [
+      function () {
+        return this.type === "expense";
+      },
+      "Expense category must be added",
+    ],
   },
   description: String,
   createdAt: { type: Date, immutable: true },

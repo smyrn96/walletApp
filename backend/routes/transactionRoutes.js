@@ -9,6 +9,7 @@ const {
   createTransaction,
   updateTransaction,
   deleteTransaction,
+  getTransactionStats,
 } = transactionController;
 
 const { protectEndpoints } = authController;
@@ -17,6 +18,7 @@ const { protectEndpoints } = authController;
 router.use(protectEndpoints);
 
 router.route("/").get(getAllTransactions).post(createTransaction);
+router.route("/stats").get(getTransactionStats);
 router
   .route("/:id")
   .get(getTransaction)
