@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const transactionRouter = require("./transactionRoutes");
+const investmentRouter = require("./investmentRoutes");
 
 const userController = require("../controllers/userController");
 const authController = require("../controllers/authController");
@@ -9,7 +10,9 @@ const { getAllUsers, createUser, getUser, updateUser, deleteUser } =
 
 const { signup, login, protectEndpoints, restrictTo } = authController;
 
+//Get transactions and investments linked to a user
 router.use("/:userId/transactions", transactionRouter);
+router.use("/:userId/investments", investmentRouter);
 
 //Visible routes to all
 router.route("/signup").post(signup);

@@ -67,7 +67,7 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
-userSchema.pre(["findOneAndUpdate", "updateOne"], function (next) {
+userSchema.pre(["findOneAndUpdate", "updateOne"], async function (next) {
   this.setUpdate({ ...this.getUpdate(), updatedAt: Date.now() - 1000 });
 
   next();

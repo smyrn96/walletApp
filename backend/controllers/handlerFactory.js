@@ -1,6 +1,7 @@
 const { Model } = require("mongoose");
 const { catchAsync } = require("../utils/catchAsync");
 const APIFeatures = require("../utils/apiFeatures");
+const AppError = require("../utils/appError");
 
 exports.deleteOne = (Model) =>
   catchAsync(async (req, res, next) => {
@@ -21,6 +22,7 @@ exports.updateOne = (Model) =>
   catchAsync(async (req, res, next) => {
     const id = req.params.id;
     const data = req.body;
+
     const doc = await Model.findByIdAndUpdate(id, data, {
       new: true,
       runValidators: true,
@@ -40,6 +42,8 @@ exports.updateOne = (Model) =>
 
 exports.createOne = (Model) =>
   catchAsync(async (req, res, next) => {
+    if (req.user) req.body.userId = req.user._id;
+
     const doc = await Model.create(req.body);
 
     res.status(201).json({
