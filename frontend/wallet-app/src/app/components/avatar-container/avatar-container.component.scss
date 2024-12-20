@@ -1,0 +1,20 @@
+.avatar-container {
+  margin-right: 1rem;
+
+  .circle {
+    border-radius: 50%;
+    background-color: #cacaca;
+    padding: 0.5rem;
+    display: flex;
+    width: 40px;
+    height: 40px;
+    justify-content: center;
+    align-items: center;
+
+    .svg-user {
+      width: 30px;
+      height: 30px;
+      fill: black;
+    }
+  }
+}

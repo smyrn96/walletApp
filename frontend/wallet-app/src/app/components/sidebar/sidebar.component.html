@@ -1,1 +1,18 @@
-<div class="sidebar-container"></div>
+<div class="sidebar-container">
+  <div class="sidebar-wrapper">
+    <logo-item></logo-item>
+    <div class="menu-items-wrapper">
+      <div class="primary-menu-container">
+        <div *ngFor="let item of primaryMenu">
+          <menu-item [item]="item"></menu-item>
+        </div>
+      </div>
+
+      <div class="secondary-menu-container">
+        <div *ngFor="let item of secondaryMenu">
+          <menu-item [item]="item"></menu-item>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
