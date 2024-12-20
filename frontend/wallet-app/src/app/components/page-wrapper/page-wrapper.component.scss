@@ -1,0 +1,10 @@
+.page-wrapper-container {
+  position: relative;
+
+  .content-wrapper {
+    position: fixed;
+    left: 320px;
+    margin-top: 1rem;
+    width: calc(100% - 320px);
+  }
+}

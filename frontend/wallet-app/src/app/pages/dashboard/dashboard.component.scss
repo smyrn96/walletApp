@@ -1,0 +1,26 @@
+.row-container {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+
+  .text-container {
+    h2,
+    h3 {
+      margin: 0.5rem 0;
+    }
+
+    .subtitle {
+      color: #cacaca;
+    }
+  }
+
+  .avatar-container {
+    margin-right: 1rem;
+    .circle {
+      border-radius: 50%;
+      background-color: #cacaca;
+      padding: 0.25rem;
+    }
+  }
+}
