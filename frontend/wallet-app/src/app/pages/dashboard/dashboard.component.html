@@ -3,4 +3,18 @@
     <title-container [title]="title" [subtitle]="subtitle"></title-container>
     <avatar-container [iconName]="icon"></avatar-container>
   </div>
+
+  <div class="stats-container">
+    <div *ngFor="let stat of stats">
+      <stats-card [stat]="stat"></stats-card>
+    </div>
+  </div>
+
+  <div class="charts-container">
+    <doughnut-chart [items]="expenses" widgetTitle="Expenses"></doughnut-chart>
+    <doughnut-chart
+      [items]="investments"
+      widgetTitle="Investments"
+    ></doughnut-chart>
+  </div>
 </page-wrapper>

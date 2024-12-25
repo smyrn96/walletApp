@@ -1,0 +1,23 @@
+<div class="chart-container">
+  <mat-card appearance="outlined">
+    <mat-card-header>
+      <mat-card-title>
+        <h3 class="widget-title">{{ widgetTitle }}</h3>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <canvas #chartCanvas>{{ chart }}</canvas>
+      <div class="legends-list-container">
+        <div *ngFor="let label of labels; let i = index">
+          <div class="legend-container">
+            <div
+              class="legend-color"
+              [ngStyle]="{ 'background-color': colors[i] }"
+            ></div>
+            <div class="legend-title">{{ label }}</div>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { IconServiceService } from './services/icon-service.service';
+import { IconService } from './services/icon-service.service';
+import { TextService } from './services/text-service.service';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,7 @@ import { IconServiceService } from './services/icon-service.service';
 export class AppComponent {
   title = 'wallet-app';
 
-  constructor(private iconService: IconServiceService) {}
+  constructor(private iconService: IconService) {}
 
   ngOnInit() {
     this.iconService.registerIcons();

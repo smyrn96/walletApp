@@ -5,7 +5,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 @Injectable({
   providedIn: 'root',
 })
-export class IconServiceService {
+export class IconService {
   constructor(
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer
@@ -20,6 +20,9 @@ export class IconServiceService {
         'investmentIcon',
         'settingsIcon',
         'helpIcon',
+        'roundUpIcon',
+        'incomeIcon',
+        'expenseIcon',
       ]),
       '../assets/icons'
     );

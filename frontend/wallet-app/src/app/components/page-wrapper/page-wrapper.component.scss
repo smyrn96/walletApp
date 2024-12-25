@@ -4,7 +4,9 @@
   .content-wrapper {
     position: fixed;
     left: 320px;
-    margin-top: 1rem;
+    top: 0;
+    overflow-y: scroll;
     width: calc(100% - 320px);
+    height: 100%;
   }
 }

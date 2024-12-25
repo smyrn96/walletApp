@@ -17,6 +17,8 @@ import { AvatarContainerComponent } from './components/avatar-container/avatar-c
 import { TitleContainerComponent } from './components/title-container/title-container.component';
 import { LogoItemComponent } from './components/logo-item/logo-item.component';
 import { MenuItemComponent } from './components/menu-item/menu-item.component';
+import { StatsCardComponent } from './components/stats-card/stats-card.component';
+import { DoughnutChartComponent } from './components/doughnut-chart/doughnut-chart.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,8 @@ import { MenuItemComponent } from './components/menu-item/menu-item.component';
     TitleContainerComponent,
     LogoItemComponent,
     MenuItemComponent,
+    StatsCardComponent,
+    DoughnutChartComponent,
   ],
   imports: [
     BrowserModule,
