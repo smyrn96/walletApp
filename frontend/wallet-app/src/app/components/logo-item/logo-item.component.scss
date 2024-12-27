@@ -1,4 +1,11 @@
 .logo-container {
   display: flex;
   align-items: center;
+  padding: 0 0.75rem;
+
+  &.collapsed {
+    width: 100%;
+    justify-content: center;
+    padding: 0;
+  }
 }

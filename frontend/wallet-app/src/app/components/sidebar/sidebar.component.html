@@ -1,14 +1,24 @@
-<div class="sidebar-container">
+<div [ngClass]="['sidebar-container', isMenuCollapsed ? 'collapsed' : '']">
   <div class="sidebar-wrapper">
     <logo-item></logo-item>
     <div class="menu-items-wrapper">
-      <div class="primary-menu-container">
+      <div
+        [ngClass]="[
+          'primary-menu-container',
+          isMenuCollapsed ? 'collapsed' : ''
+        ]"
+      >
         <div *ngFor="let item of primaryMenu">
           <menu-item [item]="item"></menu-item>
         </div>
       </div>
 
-      <div class="secondary-menu-container">
+      <div
+        [ngClass]="[
+          'secondary-menu-container',
+          isMenuCollapsed ? 'collapsed' : ''
+        ]"
+      >
         <div *ngFor="let item of secondaryMenu">
           <menu-item [item]="item"></menu-item>
         </div>

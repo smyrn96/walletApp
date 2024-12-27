@@ -1,9 +1,17 @@
 .avatar-container {
   margin-right: 1rem;
+  display: flex;
+  align-items: center;
+
+  &.collapsed {
+    justify-content: center;
+    width: 100%;
+    margin: 0;
+  }
 
   .circle {
     border-radius: 50%;
-    background-color: #cacaca;
+    background-color: white;
     padding: 0.5rem;
     display: flex;
     width: 40px;

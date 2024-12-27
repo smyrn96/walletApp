@@ -1,4 +1,4 @@
-<div class="avatar-container">
+<div [ngClass]="['avatar-container', isMenuCollapsed ? 'collapsed' : '']">
   <div class="circle">
     <mat-icon [svgIcon]="iconName" class="svg-user"></mat-icon>
   </div>

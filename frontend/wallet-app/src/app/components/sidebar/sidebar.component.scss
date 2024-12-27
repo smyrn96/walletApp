@@ -2,13 +2,17 @@
   position: fixed;
   left: 0;
   top: 0;
-  background-color: gray;
-  min-width: 260px;
+  background-color: #613dc1;
+  width: 260px;
   height: 100%;
+  color: white;
+
+  &.collapsed {
+    width: 100px;
+  }
 
   .sidebar-wrapper {
     margin-top: 1.5rem;
-    margin-left: 1rem;
     height: 100%;
 
     .menu-items-wrapper {
@@ -20,10 +24,13 @@
 
       .primary-menu-container,
       .secondary-menu-container {
-        margin-left: 0.5rem;
         display: flex;
         flex-direction: column;
         gap: 2rem;
+
+        &.collapsed {
+          align-items: center;
+        }
       }
     }
   }

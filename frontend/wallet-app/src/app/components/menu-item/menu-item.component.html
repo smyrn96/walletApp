@@ -1,4 +1,6 @@
-<div class="item-container">
-  <div class="item-title">{{ item.title }}</div>
-  <mat-icon [svgIcon]="item.icon" class="menu-item-svg"></mat-icon>
+<div class="menu-item-wrapper">
+  <div [ngClass]="['item-container', isMenuCollapsed ? 'collapsed' : '']">
+    <div *ngIf="!isMenuCollapsed" class="item-title">{{ item.title }}</div>
+    <mat-icon [svgIcon]="item.icon" class="menu-item-svg"></mat-icon>
+  </div>
 </div>

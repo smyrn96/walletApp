@@ -6,6 +6,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconRegistry } from '@angular/material/icon';
+import { LayoutModule } from '@angular/cdk/layout';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -42,6 +43,7 @@ import { DoughnutChartComponent } from './components/doughnut-chart/doughnut-cha
     MatToolbarModule,
     MatIconModule,
     MatCardModule,
+    LayoutModule,
   ],
   providers: [MatIconRegistry],
   bootstrap: [AppComponent],

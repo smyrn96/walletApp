@@ -6,7 +6,13 @@
     left: 320px;
     top: 0;
     overflow-y: scroll;
+    overflow-x: hidden;
     width: calc(100% - 320px);
     height: 100%;
+
+    &.collapsed {
+      left: 160px;
+      width: calc(100% - 160px);
+    }
   }
 }

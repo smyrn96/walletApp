@@ -1,3 +1,4 @@
+import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,7 +7,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./page-wrapper.component.scss'],
 })
 export class PageWrapperComponent implements OnInit {
-  constructor() {}
+  isMenuCollapsed: boolean = false;
+  constructor(private breakpointObserver: BreakpointObserver) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.breakpointObserver
+      .observe(['(min-width: 1100px)'])
+      .subscribe((state: BreakpointState) => {
+        if (state.matches) {
+          this.isMenuCollapsed = false;
+        } else {
+          this.isMenuCollapsed = true;
+        }
+      });
+  }
 }

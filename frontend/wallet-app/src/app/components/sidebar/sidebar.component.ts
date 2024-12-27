@@ -1,3 +1,4 @@
+import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'src/app/models/menu-item.model';
 
@@ -17,8 +18,19 @@ export class SidebarComponent implements OnInit {
     { id: 3, title: 'Settings', icon: 'settingsIcon' },
     { id: 4, title: 'Help', icon: 'helpIcon' },
   ];
+  isMenuCollapsed: boolean = false;
 
-  constructor() {}
+  constructor(private breakpointObserver: BreakpointObserver) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.breakpointObserver
+      .observe(['(min-width: 1100px)'])
+      .subscribe((state: BreakpointState) => {
+        if (state.matches) {
+          this.isMenuCollapsed = false;
+        } else {
+          this.isMenuCollapsed = true;
+        }
+      });
+  }
 }
