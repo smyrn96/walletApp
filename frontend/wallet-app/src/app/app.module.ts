@@ -20,6 +20,8 @@ import { LogoItemComponent } from './components/logo-item/logo-item.component';
 import { MenuItemComponent } from './components/menu-item/menu-item.component';
 import { StatsCardComponent } from './components/stats-card/stats-card.component';
 import { DoughnutChartComponent } from './components/doughnut-chart/doughnut-chart.component';
+import { LoginComponent } from './pages/login/login.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -33,6 +35,7 @@ import { DoughnutChartComponent } from './components/doughnut-chart/doughnut-cha
     MenuItemComponent,
     StatsCardComponent,
     DoughnutChartComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,6 +47,7 @@ import { DoughnutChartComponent } from './components/doughnut-chart/doughnut-cha
     MatIconModule,
     MatCardModule,
     LayoutModule,
+    ReactiveFormsModule,
   ],
   providers: [MatIconRegistry],
   bootstrap: [AppComponent],

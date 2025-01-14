@@ -2,6 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const app = express();
 const morgan = require("morgan");
+const cors = require("cors");
 const userRouter = require("./routes/userRoutes");
 const transactionRouter = require("./routes/transactionRoutes");
 const investmentRouter = require("./routes/investmentRoutes");
@@ -18,6 +19,8 @@ app.use(express.json({ limit: "10kb" }));
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
+
+app.use(cors());
 
 //Routing
 app.use("/api/v1/users/", userRouter);

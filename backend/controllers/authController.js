@@ -82,7 +82,7 @@ exports.protectEndpoints = catchAsync(async (req, res, next) => {
   const headers = req.headers;
   let token;
 
-  if (headers.authorization || headers.authorization.startsWith("Bearer")) {
+  if (headers.authorization && headers.authorization.startsWith("Bearer")) {
     token = headers.authorization.split(" ")[1];
   }
 

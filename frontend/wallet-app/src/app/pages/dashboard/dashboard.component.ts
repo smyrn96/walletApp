@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DashboardService } from 'src/app/services/dashboard.service';
 import {
   DoughnutChartCategory,
   StatsWidget,
@@ -13,6 +14,7 @@ export class DashboardComponent implements OnInit {
   title: string = 'Welcome back Manos!';
   subtitle: string = 'Browse your dashboard';
   icon: string = 'userIcon';
+  testDashboardStats: StatsWidget[] = [];
   stats: StatsWidget[] = [
     { id: 0, title: 'transactions', total: 1200, icon: 'transactionIcon' },
     { id: 1, title: 'income', total: 2000, icon: 'incomeIcon' },
@@ -36,7 +38,14 @@ export class DashboardComponent implements OnInit {
     { id: 3, title: 'etf', total: 30, color: '#C49BBB' },
   ];
 
-  constructor() {}
+  constructor(private dashboardService: DashboardService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.dashboardService
+      .getDashboardStats()
+      .subscribe((stats: StatsWidget[]) => {
+        console.log(stats);
+        this.testDashboardStats = stats;
+      });
+  }
 }
