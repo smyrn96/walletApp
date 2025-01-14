@@ -6,9 +6,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class AccountService {
-  private API_URL: string = 'http://localhost:8000/api/v1/';
+  private API_URL: string = 'http://localhost:8000/api/v1';
 
-  private apiUrl: string = `${this.API_URL}/login`;
+  private apiUrl: string = `${this.API_URL}/users/login`;
   constructor(private http: HttpClient) {}
 
   onLogin(credentials: any): Observable<any> {

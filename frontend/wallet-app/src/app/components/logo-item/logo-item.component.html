@@ -1,4 +1,4 @@
 <div [ngClass]="['logo-container', isMenuCollapsed ? 'collapsed' : '']">
-  <avatar-container></avatar-container>
+  <avatar-container [isMenuCollapsed]="isMenuCollapsed"></avatar-container>
   <h2 *ngIf="!isMenuCollapsed">{{ appTitle }}</h2>
 </div>

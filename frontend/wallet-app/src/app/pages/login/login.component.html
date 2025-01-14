@@ -1,6 +1,6 @@
 <div class="login-container">
   <div class="login-logo">
-    <logo-item></logo-item>
+    <logo-item [isMenuCollapsed]="undefined"></logo-item>
   </div>
   <div class="login-form-container">
     <div class="login-grid">
@@ -12,7 +12,7 @@
       >
         <div class="input-container">
           <label for="username">Username:</label>
-          <input type="text" id="username" formControlName="username" />
+          <input type="text" id="username" formControlName="email" />
         </div>
 
         <div class="input-container">

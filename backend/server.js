@@ -1,5 +1,7 @@
 const app = require("./app");
+const dns = require("node:dns/promises");
 const mongoose = require("mongoose");
+dns.setServers(["1.1.1.1"]);
 
 const port = process.env.PORT || 3000;
 const server = app.listen(port, () => {

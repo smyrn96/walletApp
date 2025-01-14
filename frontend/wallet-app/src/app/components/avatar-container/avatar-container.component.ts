@@ -8,19 +8,21 @@ import { Component, Input } from '@angular/core';
 })
 export class AvatarContainerComponent {
   @Input() iconName: string = '';
-  isMenuCollapsed: boolean = false;
+  @Input() isMenuCollapsed: boolean | undefined = false;
 
   constructor(private breakpointObserver: BreakpointObserver) {}
 
   ngOnInit() {
-    this.breakpointObserver
-      .observe(['(min-width: 1100px)'])
-      .subscribe((state: BreakpointState) => {
-        if (state.matches) {
-          this.isMenuCollapsed = false;
-        } else {
-          this.isMenuCollapsed = true;
-        }
-      });
+    if (this.isMenuCollapsed !== undefined) {
+      this.breakpointObserver
+        .observe(['(min-width: 1100px)'])
+        .subscribe((state: BreakpointState) => {
+          if (state.matches) {
+            this.isMenuCollapsed = false;
+          } else {
+            this.isMenuCollapsed = true;
+          }
+        });
+    }
   }
 }
