@@ -1,19 +1,26 @@
 <div class="login-container">
-  <logo-item class="login-logo"></logo-item>
+  <div class="login-logo">
+    <logo-item></logo-item>
+  </div>
   <div class="login-form-container">
     <div class="login-grid">
+      <h1 class="header-title">Login</h1>
       <form
         [formGroup]="loginForm"
         (ngSubmit)="onSubmit()"
         class="form-container"
       >
-        <label for="username">Username:</label>
-        <input type="text" id="username" formControlName="username" />
+        <div class="input-container">
+          <label for="username">Username:</label>
+          <input type="text" id="username" formControlName="username" />
+        </div>
 
-        <label for="password">Password:</label>
-        <input type="password" id="password" formControlName="password" />
+        <div class="input-container">
+          <label for="password">Password:</label>
+          <input type="password" id="password" formControlName="password" />
+        </div>
 
-        <button class="button" type="submit">Login</button>
+        <button class="submit-button" type="submit">Login</button>
       </form>
     </div>
   </div>
