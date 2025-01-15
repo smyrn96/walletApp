@@ -13,7 +13,7 @@ import { AppComponent } from './app.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { PageWrapperComponent } from './components/page-wrapper/page-wrapper.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AvatarContainerComponent } from './components/avatar-container/avatar-container.component';
 import { TitleContainerComponent } from './components/title-container/title-container.component';
 import { LogoItemComponent } from './components/logo-item/logo-item.component';
@@ -22,6 +22,13 @@ import { StatsCardComponent } from './components/stats-card/stats-card.component
 import { DoughnutChartComponent } from './components/doughnut-chart/doughnut-chart.component';
 import { LoginComponent } from './pages/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AuthenticationInterceptor } from './interceptors/authentication.interceptor';
+
+const HttpInterceptorProvider = {
+  provide: HTTP_INTERCEPTORS,
+  useClass: AuthenticationInterceptor,
+  multi: true,
+};
 
 @NgModule({
   declarations: [
@@ -49,7 +56,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     LayoutModule,
     ReactiveFormsModule,
   ],
-  providers: [MatIconRegistry],
+  providers: [MatIconRegistry, HttpInterceptorProvider],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

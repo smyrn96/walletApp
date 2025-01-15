@@ -22,45 +22,70 @@ exports.getTransactionStats = catchAsync(async (req, res, next) => {
     if (start_date) matchStage.createdAt.$gte = new Date(start_date);
     if (end_date) matchStage.createdAt.$lte = new Date(end_date);
   }
-
-  const stats = await Transaction.aggregate([
-    { $match: matchStage }, // Filter by user and date range
+  const aggregationPipeline = [
+    // Step 1: Group by 'type' for the stats
     {
       $group: {
-        _id: { type: "$type", category: "$category" }, // Group by type and category
-        totalAmount: { $sum: "$amount" }, // Sum the amounts per category and type
-      },
-    },
-    {
-      $group: {
-        _id: "$_id.type", // Group by type (income, expense, roundup)
-        totalAmount: { $sum: "$totalAmount" }, // Total amount for each type
-        categories: {
-          $push: {
-            $cond: {
-              if: { $eq: ["$_id.type", "expense"] }, // Only push categories if the type is "expense"
-              then: {
-                category: "$_id.category", // Collect category under "expense"
-                total: "$totalAmount", // Total amount for each category
-              },
-              else: "$$REMOVE", // If not "expense", remove this field
-            },
-          },
-        },
+        _id: "$type", // Group by transaction type (income, expense, etc.)
+        total: { $sum: "$amount" }, // Sum amounts for each type
       },
     },
     {
       $project: {
-        type: "$_id", // Convert _id to type
-        _id: 0,
-        totalAmount: 1,
-        categories: 1, // Keep categories for expense type only
+        title: "$_id", // Rename _id to 'title'
+        total: 1, // Include the total
+        _id: 0, // Exclude the original _id field
       },
     },
-  ]);
+  ];
 
+  // Execute the aggregation to get transaction stats (total for each type)
+  const stats = await Transaction.aggregate(aggregationPipeline);
+  const statsTotal = stats.reduce((sum, stat) => sum + stat.total, 0);
+
+  // Step 2: Get category breakdown only for 'expense' transactions
+  const categoryPipeline = [
+    {
+      $match: { type: "expense" }, // Only consider 'expense' type transactions
+    },
+    {
+      $group: {
+        _id: "$category", // Group by category for 'expense' type
+        total: { $sum: "$amount" }, // Sum the amounts for each category
+      },
+    },
+    {
+      $project: {
+        title: "$_id", // Rename _id to 'title'
+        total: 1, // Include the total
+        _id: 0, // Exclude the original _id field
+      },
+    },
+  ];
+
+  // Execute the aggregation to get category totals
+  const expenses = await Transaction.aggregate(categoryPipeline);
+  const expensesTotal = expenses.reduce(
+    (sum, transaction) => sum + transaction.total,
+    0
+  );
+
+  // Format and return the response
   res.status(200).json({
     status: "success",
-    data: stats,
+    data: {
+      stats: stats.map((item, index) => ({
+        id: index,
+        title: item.title,
+        total: item.total,
+      })),
+      statsTotal: statsTotal, // Add total for stats aggregation
+      expenses: expenses.map((item, index) => ({
+        id: index,
+        title: item.title,
+        total: item.total,
+      })),
+      expensesTotal: expensesTotal, // Add total for transactions aggregation
+    },
   });
 });

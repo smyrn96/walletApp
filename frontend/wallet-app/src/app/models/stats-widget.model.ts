@@ -11,3 +11,10 @@ export interface DoughnutChartCategory {
   total: number;
   color: string;
 }
+
+export interface DashboardStats {
+  expenses: Object[];
+  expensesTotal: number;
+  stats: Object[];
+  statsTotal: number;
+}

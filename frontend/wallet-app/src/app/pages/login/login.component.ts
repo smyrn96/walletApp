@@ -24,6 +24,7 @@ export class LoginComponent {
     console.log(this.loginForm.value);
 
     this.accountService.onLogin(this.loginForm.value).subscribe((res: any) => {
+      console.log(res);
       localStorage.setItem('token', res.token);
       this.route.navigateByUrl('/dashboard');
     });
