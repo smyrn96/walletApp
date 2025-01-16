@@ -23,10 +23,19 @@ import { DoughnutChartComponent } from './components/doughnut-chart/doughnut-cha
 import { LoginComponent } from './pages/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthenticationInterceptor } from './interceptors/authentication.interceptor';
+import { LoaderComponent } from './components/loader/loader.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { LoaderInterceptor } from './interceptors/loader.interceptor';
 
 const AuthenticationInterceptorProvider = {
   provide: HTTP_INTERCEPTORS,
   useClass: AuthenticationInterceptor,
+  multi: true,
+};
+
+const LoaderInterceptorProvider = {
+  provide: HTTP_INTERCEPTORS,
+  useClass: LoaderInterceptor,
   multi: true,
 };
 
@@ -43,6 +52,7 @@ const AuthenticationInterceptorProvider = {
     StatsCardComponent,
     DoughnutChartComponent,
     LoginComponent,
+    LoaderComponent,
   ],
   imports: [
     BrowserModule,
@@ -55,8 +65,13 @@ const AuthenticationInterceptorProvider = {
     MatCardModule,
     LayoutModule,
     ReactiveFormsModule,
+    MatProgressSpinnerModule,
   ],
-  providers: [MatIconRegistry, AuthenticationInterceptorProvider],
+  providers: [
+    MatIconRegistry,
+    AuthenticationInterceptorProvider,
+    LoaderInterceptorProvider,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
