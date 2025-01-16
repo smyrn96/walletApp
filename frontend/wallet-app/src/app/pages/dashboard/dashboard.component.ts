@@ -3,6 +3,8 @@ import { DashboardService } from 'src/app/services/dashboard.service';
 import {
   DashboardStats,
   DoughnutChartCategory,
+  HttpResponseTemplate,
+  InvestmentStats,
   StatsWidget,
 } from 'src/app/models/stats-widget.model';
 import { AppConstants } from 'src/app/app-constants';
@@ -16,28 +18,10 @@ export class DashboardComponent implements OnInit {
   title: string = 'Welcome back Manos!';
   subtitle: string = 'Browse your dashboard';
   icon: string = 'userIcon';
-  stats: StatsWidget[] = [
-    { id: 0, title: 'transactions', total: 1200, icon: 'transactionIcon' },
-    { id: 1, title: 'income', total: 2000, icon: 'incomeIcon' },
-    { id: 2, title: 'expenses', total: 1000, icon: 'expenseIcon' },
-    { id: 3, title: 'investments', total: 100, icon: 'investmentIcon' },
-    { id: 4, title: 'roundups', total: 10, icon: 'roundUpIcon' },
-  ];
+  stats: StatsWidget[] = [];
 
-  expenses: DoughnutChartCategory[] = [
-    { id: 0, title: 'food', total: 200, color: '#19297C' },
-    { id: 1, title: 'transportation', total: 200, color: '#585481' },
-    { id: 2, title: 'health', total: 200, color: '#A1867F' },
-    { id: 3, title: 'education', total: 200, color: '#C49BBB' },
-    { id: 4, title: 'others', total: 200, color: '#D1BCE3' },
-  ];
-
-  investments: DoughnutChartCategory[] = [
-    { id: 0, title: 'stock', total: 20, color: '#19297C' },
-    { id: 1, title: 'bond', total: 20, color: '#585481' },
-    { id: 2, title: 'crypto', total: 30, color: '#A1867F' },
-    { id: 3, title: 'etf', total: 30, color: '#C49BBB' },
-  ];
+  expenses: DoughnutChartCategory[] = [];
+  investments: DoughnutChartCategory[] = [];
 
   constructor(
     private dashboardService: DashboardService,
@@ -47,8 +31,42 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.dashboardService
       .getDashboardStats()
-      .subscribe((stats: DashboardStats) => {
-        console.log(stats);
+      .subscribe((stats: HttpResponseTemplate<DashboardStats>) => {
+        const data = stats.data;
+
+        console.log(data.stats);
+        this.stats = this.buildStatsArray(data.stats, data.statsTotal);
+
+        console.log(this.stats);
+        this.expenses = data.expenses;
       });
+
+    this.dashboardService
+      .getDashboardInvestments()
+      .subscribe((investments: HttpResponseTemplate<InvestmentStats>) => {
+        const data = investments.data;
+        this.investments = data.investments;
+      });
+  }
+
+  buildStatsArray(stats: StatsWidget[], statsTotal: number): StatsWidget[] {
+    const constantIcons = this.constants.dashBoardIcons;
+    const transactionsIcon = constantIcons['transaction'];
+    stats.forEach((stat: StatsWidget) => {
+      stat.id += 1;
+      stat.icon =
+        this.constants.dashBoardIcons[stat.title as keyof typeof constantIcons];
+      return stat;
+    });
+
+    return [
+      {
+        id: 0,
+        title: 'transactions',
+        total: statsTotal,
+        icon: transactionsIcon,
+      } as StatsWidget,
+      ...stats,
+    ];
   }
 }

@@ -10,4 +10,15 @@ export class TextService {
     if (!text) return '';
     return text.charAt(0).toUpperCase() + text.slice(1);
   }
+
+  public addCurrencyCharacter(amount: number, currency: string): string {
+    switch (currency) {
+      case 'USD':
+        return '$ ' + amount;
+      case 'EUR':
+        return amount + ' €';
+      default:
+        return '';
+    }
+  }
 }

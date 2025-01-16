@@ -37,6 +37,56 @@ exports.getTransactionStats = catchAsync(async (req, res, next) => {
         _id: 0, // Exclude the original _id field
       },
     },
+    {
+      $group: {
+        _id: null, // Group everything into a single array
+        data: { $push: "$$ROOT" }, // Push all the grouped results into an array
+      },
+    },
+    {
+      $addFields: {
+        data: {
+          $map: {
+            input: [
+              "income",
+              "expense",
+              "investment",
+              "roundup", // Define the enum order here
+            ],
+            as: "type",
+            in: {
+              $let: {
+                vars: {
+                  match: {
+                    $arrayElemAt: [
+                      {
+                        $filter: {
+                          input: "$data",
+                          as: "item",
+                          cond: { $eq: ["$$item.title", "$$type"] },
+                        },
+                      },
+                      0,
+                    ],
+                  },
+                },
+                in: {
+                  title: "$$type",
+                  total: { $ifNull: ["$$match.total", 0] }, // Default total to 0 if not found
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+    // Step 4: Unwind the merged and ordered data
+    {
+      $unwind: "$data",
+    },
+    {
+      $replaceRoot: { newRoot: "$data" }, // Replace root with the ordered data
+    },
   ];
 
   // Execute the aggregation to get transaction stats (total for each type)
@@ -60,6 +110,9 @@ exports.getTransactionStats = catchAsync(async (req, res, next) => {
         total: 1, // Include the total
         _id: 0, // Exclude the original _id field
       },
+    },
+    {
+      $sort: { total: -1 }, // Sort by 'total' in descending order
     },
   ];
 

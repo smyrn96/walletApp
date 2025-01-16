@@ -1,5 +1,12 @@
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  Input,
+  ViewChild,
+} from '@angular/core';
 import Chart from 'chart.js/auto';
+import { AppConstants } from 'src/app/app-constants';
 import { DoughnutChartCategory } from 'src/app/models/stats-widget.model';
 import { TextService } from 'src/app/services/text-service.service';
 
@@ -14,28 +21,39 @@ export class DoughnutChartComponent {
       id: 0,
       title: 'food',
       total: 200,
-      color: 'transactionIcon',
     },
   ];
   @Input() widgetTitle: string = '';
   @ViewChild('chartCanvas', { static: true }) chartCanvas!: ElementRef;
   public chart: any;
-  constructor(private textService: TextService) {}
   labels: string[] = [];
   colors: string[] = [];
+  values: number[] = [];
 
-  ngOnInit(): void {
-    this.labels = this.items.map((item) =>
-      this.textService.capitalFirstLetter(item.title)
-    );
-    this.colors = this.items.map((item) => item.color);
+  constructor(
+    private textService: TextService,
+    private constants: AppConstants
+  ) {}
 
+  ngOnInit() {
+    this.colors = this.constants.doughnutColors;
     this.createChart();
   }
 
-  createChart() {
-    const values = this.items.map((item) => item.total);
+  ngOnChanges(): void {
+    //Labels and values on change rerender
+    this.labels = this.items.map((item) =>
+      this.textService.capitalFirstLetter(item.title)
+    );
+    this.values = this.items.map((item) => item.total);
 
+    if (this.chart) {
+      //updating chart with those values
+      this.updateChart();
+    }
+  }
+
+  createChart() {
     this.chart = new Chart(this.chartCanvas.nativeElement, {
       type: 'doughnut', //this denotes tha type of chart
 
@@ -45,7 +63,7 @@ export class DoughnutChartComponent {
         datasets: [
           {
             label: 'Total',
-            data: values,
+            data: this.values,
             backgroundColor: this.colors,
             hoverOffset: 4,
           },
@@ -61,5 +79,12 @@ export class DoughnutChartComponent {
         },
       },
     });
+  }
+
+  updateChart() {
+    this.chart.data.labels = this.labels;
+    this.chart.data.datasets[0].data = this.values;
+
+    this.chart.update();
   }
 }

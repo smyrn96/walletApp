@@ -11,4 +11,12 @@ export class AppConstants {
     '#C49BBB',
     '#D1BCE3',
   ];
+
+  public dashBoardIcons = {
+    transaction: 'transactionIcon',
+    income: 'incomeIcon',
+    expense: 'expenseIcon',
+    investment: 'investmentIcon',
+    roundup: 'roundUpIcon',
+  };
 }

@@ -24,7 +24,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthenticationInterceptor } from './interceptors/authentication.interceptor';
 
-const HttpInterceptorProvider = {
+const AuthenticationInterceptorProvider = {
   provide: HTTP_INTERCEPTORS,
   useClass: AuthenticationInterceptor,
   multi: true,
@@ -56,7 +56,7 @@ const HttpInterceptorProvider = {
     LayoutModule,
     ReactiveFormsModule,
   ],
-  providers: [MatIconRegistry, HttpInterceptorProvider],
+  providers: [MatIconRegistry, AuthenticationInterceptorProvider],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

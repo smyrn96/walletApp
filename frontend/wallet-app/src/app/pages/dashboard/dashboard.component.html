@@ -11,10 +11,17 @@
   </div>
 
   <div class="charts-container">
-    <doughnut-chart [items]="expenses" widgetTitle="Expenses"></doughnut-chart>
-    <doughnut-chart
-      [items]="investments"
-      widgetTitle="Investments"
-    ></doughnut-chart>
+    <div *ngIf="expenses">
+      <doughnut-chart
+        [items]="expenses"
+        widgetTitle="Expenses"
+      ></doughnut-chart>
+    </div>
+    <div *ngIf="investments">
+      <doughnut-chart
+        [items]="investments"
+        widgetTitle="Investments"
+      ></doughnut-chart>
+    </div>
   </div>
 </page-wrapper>

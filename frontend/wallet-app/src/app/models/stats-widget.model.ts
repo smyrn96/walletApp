@@ -1,7 +1,7 @@
 export interface StatsWidget {
   id: number;
   title: string;
-  total: number;
+  total: number | string;
   icon: string;
 }
 
@@ -9,12 +9,21 @@ export interface DoughnutChartCategory {
   id: number;
   title: string;
   total: number;
-  color: string;
 }
 
 export interface DashboardStats {
-  expenses: Object[];
+  expenses: DoughnutChartCategory[];
   expensesTotal: number;
-  stats: Object[];
+  stats: StatsWidget[];
   statsTotal: number;
+}
+
+export interface InvestmentStats {
+  investments: DoughnutChartCategory[];
+  investmentsTotal: number;
+}
+
+export interface HttpResponseTemplate<E> {
+  status: string;
+  data: E;
 }

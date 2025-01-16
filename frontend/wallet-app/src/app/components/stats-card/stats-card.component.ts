@@ -20,5 +20,9 @@ export class StatsCardComponent {
 
   ngOnInit() {
     this.statTitle = this.textService.capitalFirstLetter(this.stat.title);
+    this.stat.total = this.textService.addCurrencyCharacter(
+      this.stat.total as number,
+      'EUR'
+    );
   }
 }
